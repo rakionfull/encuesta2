@@ -27,6 +27,7 @@ File: Main Css File
 
 */
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap");
+
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -121,6 +122,9 @@ File: Main Css File
     color: #505d69; }
 
 @media (max-width: 991px) {
+  .topnav .navbar-nav .dropdown-item.active, .topnav .navbar-nav .dropdown-item:hover{
+    color: #b1b1b1dd; }
+  
   .navbar-brand-box {
     width: auto; }
   .logo span.logo-lg {
@@ -720,7 +724,7 @@ body[data-sidebar="colored"].vertical-collpsed .vertical-menu #sidebar-menu ul l
       color: #fb6a28;
       background-color: transparent; }
   .topnav .navbar-nav .dropdown-item {
-    color: #dddd; }
+    color: #b1b1b1dd; }
     .topnav .navbar-nav .dropdown-item.active, .topnav .navbar-nav .dropdown-item:hover {
       color: #fff; }
   .topnav .navbar-nav .nav-item .nav-link.active {
@@ -735,11 +739,14 @@ body[data-sidebar="colored"].vertical-collpsed .vertical-menu #sidebar-menu ul l
     max-width: 85%; } }
 
 @media (min-width: 992px) {
+ 
   .topnav .navbar-nav .nav-item:first-of-type .nav-link {
     padding-left: 0; }
   .topnav .dropdown-item {
     padding: .5rem 1.5rem;
-    min-width: 180px; }
+    min-width: 180px; 
+    background-color: #273570;
+  }
   .topnav .dropdown.mega-dropdown .mega-dropdown-menu {
     left: 0px;
     right: auto; }
@@ -786,9 +793,16 @@ body[data-sidebar="colored"].vertical-collpsed .vertical-menu #sidebar-menu ul l
 @media (max-width: 1199.98px) {
   .topnav-menu .navbar-nav li:last-of-type .dropdown .dropdown-menu {
     right: 100%;
-    left: auto; } }
-
+    left: auto; 
+    
+  } }
+  .navbar-nav .dropdown-menu{
+  background: #273570;
+}
 @media (max-width: 991.98px) {
+  .topnav .navbar-nav .dropdown-item:hover{
+    color: #fff;
+  }
   .navbar-brand-box .logo-dark {
     display: block; }
     .navbar-brand-box .logo-dark span.logo-sm {
@@ -802,7 +816,9 @@ body[data-sidebar="colored"].vertical-collpsed .vertical-menu #sidebar-menu ul l
     .topnav .navbar-nav .nav-link {
       padding: 0.75rem 1.1rem; }
     .topnav .dropdown .dropdown-menu {
+     
       background-color: transparent;
+     
       border: none;
       -webkit-box-shadow: none;
               box-shadow: none;
@@ -2592,6 +2608,7 @@ div.dt-button-info {
     color: #fff; }
 
 @media (min-width: 992px) {
+  
   body[data-layout="horizontal"] .fixed-solution .sticky-table-header {
     top: 120px !important; } }
 
