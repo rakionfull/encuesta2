@@ -70,9 +70,13 @@ var table = $('#table_campanias').DataTable({
             "previous": "Anterior"
         }
     },
+    // scrollY: "200px",
+    // fixedColumns:   {
+    //     heightMatch: 'none'
+    // },
     responsive: true,
     autoWidth: false,
-    processing: true,
+    // processing: true,
     lengthMenu:[5,10,25,50],
     pageLength:5,
     clickToSelect:false,
@@ -107,7 +111,10 @@ var table = $('#table_campanias').DataTable({
             "searchable": false
         },
         
-    ]
+    ],
+    'drawCallback': function () {
+        $( 'table_campanias tbody tr td' ).css( 'padding', '1px 1px 1px 1px' );
+    }
     
 });
 //creamos el evento de agregar compaña

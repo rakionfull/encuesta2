@@ -34,7 +34,7 @@
      
         <script src="<?=base_url('public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
         <script src="<?=base_url('public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js'); ?>"></script>
-
+        <!-- https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js -->
         <link href="<?=base_url('public/assets/libs/sweetalert2/sweetalert2.min.css'); ?>" rel="stylesheet" type="text/css" />
     </head>
 
