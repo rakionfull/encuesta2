@@ -16,12 +16,17 @@
             </div>
         </footer>
         <!-- JAVASCRIPT -->
-        <script src="<?=base_url('public/assets/libs/jquery/jquery.min.js'); ?>"></script>
+        
         <script src="<?=base_url('public/assets/libs/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
         <script src="<?=base_url('public/assets/libs/metismenu/metisMenu.min.js'); ?>"></script>
         <script src="<?=base_url('public/assets/libs/simplebar/simplebar.min.js'); ?>"></script>
         <script src="<?=base_url('public/assets/libs/node-waves/waves.min.js'); ?>"></script>
+      
+        <!-- Responsive examples -->
+  
+        <script src="<?=base_url('public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js'); ?>"></script>
         <script src="<?=base_url('public/assets/js/app.js'); ?>"></script>
+        <script src="<?=base_url('public/assets/libs/sweetalert2/sweetalert2.min.js'); ?>"></script>
     </div>   
            
 </body>
