@@ -27,6 +27,7 @@
         <script src="<?=base_url('public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js'); ?>"></script>
         <script src="<?=base_url('public/assets/js/app.js'); ?>"></script>
         <script src="<?=base_url('public/assets/libs/sweetalert2/sweetalert2.min.js'); ?>"></script>
+       
     </div>   
            
 </body>

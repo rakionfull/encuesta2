@@ -6,7 +6,7 @@ function valida_campania(){
     //valido la descripcion
     if (document.form_campania.desc_camp.value.length==0){
         document.getElementById("error_desc_camp").style.display="block";
-        document.getElementById("error_desc_camp").innerHTML ='Debe ingresar una descripcion';
+        document.getElementById("error_desc_camp").innerHTML ='Debe ingresar el nombre de la campaña';
            document.form_campania.desc_camp.focus();
            return 0;
     }
@@ -49,89 +49,53 @@ async function validacionCampania(desc_camp){
     return result; /* Retorno de Resultado */
 
 };
-var table = $('#table_campanias').DataTable({
-    language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ Entradas",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-            "first": "Primero",
-            "last": "Ultimo",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        }
-    },
-    // scrollY: "200px",
-    // fixedColumns:   {
-    //     heightMatch: 'none'
-    // },
-    responsive: true,
-    autoWidth: false,
-    // processing: true,
-    lengthMenu:[5,10,25,50],
-    pageLength:5,
-    clickToSelect:false,
-    ajax: base_url+"/main/getCampanias",
-    aoColumns: [
-        { "data": "id_camp" },
-        { "data": "numero"},
-        { "data": "desc_camp" },
 
-        {  "data": "est_camp",
-                    "bSortable": false,
-                    "mRender": function(data, type, value) {
-                        if (data == '1') {
-                            return  '<input  type="checkbox" id="camp_'+value["id_camp"]+'" onclick="changeCampania(this, event)" switch="none" checked/><label for="camp_'+value["id_camp"]+'" data-on-label="On"data-off-label="Off"></label>'
-                          
-                        }else{
-                            return  '<input type="checkbox" id="camp_'+value["id_camp"]+'" onclick="changeCampania(this, event)" switch="none" /><label for="camp_'+value["id_camp"]+'" data-on-label="On"data-off-label="Off"></label>'
-                          
-                        }
-                    }
-                },
-        { "data": "id_user" },
-        { "data": "fecha_reg" },
-        { "defaultContent": "<editCamp class='mr-3 text-primary btn btn-opcionTabla' data-toggle='tooltip' data-placement='top' title='' data-original-title='Editar'><i class='mdi mdi-pencil font-size-18'></i></editCamp>"+
-                            "<deleteCamp class='text-danger btn btn-opcionTabla' data-toggle='tooltip' data-placement='top' title='' data-original-title='Eliminar'><i class='mdi mdi-trash-can font-size-18'></i></deleteCamp>" 
-        },
-    ],
-    columnDefs: [
-        {
-            "targets": [ 0 ],
-            "visible": false,
-            "searchable": false
-        },
-        
-    ],
-    'drawCallback': function () {
-        $( 'table_campanias tbody tr td' ).css( 'padding', '1px 1px 1px 1px' );
-    }
-    
-});
-//creamos el evento de agregar compaña
+document.getElementById("add_campania").addEventListener("click",function(event){
+    event.preventDefault();   
+    document.getElementById("error_desc_camp").innerHTML='';                   
+   document.getElementById("form_reg_campania").style.display = "block";
 
-document.getElementById("add_campania").addEventListener("click",function(){
-                                
-    $("#modal_campania").modal("show");
-    document.getElementById("title-campania").innerHTML = "Agregar Campania";
-    document.getElementById("form_campania").reset();
-    
-    document.getElementById("Registrar_campania").style.display = "block";
-    document.getElementById("Modificar_campania").style.display = "none";
+  
 
 });
+document.getElementById("cancel_campania").addEventListener("click",function(event){
+    event.preventDefault();                      
+   document.getElementById("form_reg_campania").style.display = "none";
+
+
+});
+
+
+
 //registramos la campaña
+function editarCampania(element) {
+    event.preventDefault();    
+    //habiltiar el input respectivo para editar
+    $valor=element.id.split("_");
+    document.getElementById("desc_camp_"+$valor[2]).disabled=false;
+    document.getElementById("ico_camp_"+$valor[2]).style.display="block";
+    document.getElementById("ico_camp_"+$valor[2]).className = "col-lg-3 d-flex justify-content-center";
+    document.getElementById("action_camp_"+$valor[2]).style.display="none";
+    document.getElementById("texto_desc_camp_"+$valor[2]).style.display="none";
+    document.getElementById("input_desc_camp_"+$valor[2]).style.display="block";
 
-document.getElementById("Registrar_campania").addEventListener("click", async function(){
+    
+   
+}
+function cancelCampania(element) {
+    event.preventDefault();     
+    $valor=element.id.split("_");       
+    document.getElementById("desc_camp_"+$valor[2]).disabled=true;
+    document.getElementById("ico_camp_"+$valor[2]).className = "col-lg-3";
+    document.getElementById("ico_camp_"+$valor[2]).style.display="none";
+    
+    document.getElementById("action_camp_"+$valor[2]).style.display="block";
+    document.getElementById("texto_desc_camp_"+$valor[2]).style.display="block";
+    document.getElementById("input_desc_camp_"+$valor[2]).style.display="none";
+}
+document.getElementById("registrar_campania").addEventListener("click", async function(event){
+    event.preventDefault();
+    
     $valida = valida_campania();
     if($valida){
         if (!(await validacionCampania(document.getElementById("desc_camp").value))){
@@ -152,14 +116,17 @@ document.getElementById("Registrar_campania").addEventListener("click", async fu
                     {
                     
                         document.getElementById("form_campania").reset();
-                        $("#table_campanias").DataTable().ajax.reload(null, false); 
-                        $('#modal_campania').modal('hide');
+                        document.getElementById("error_desc_camp").innerHTML='';
+                        document.getElementById("form_reg_campania").style.display = "none";
+                       
                         alerta.innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
                             'Campaña Registrada'+
                             '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
                                 '<span aria-hidden="true">&times;</span>'+
                                 '</button>'+
                         '</div>';
+                        setTimeout(window.location.href = base_url+'main/manCampanias', 300);
+                        
                     } 
                     else
                     {
@@ -190,145 +157,18 @@ document.getElementById("Registrar_campania").addEventListener("click", async fu
     }
    
 });
-
-//editamos la campaña
-$('#table_campanias tbody').on( 'click', 'editCamp', function(){
-    $("#modal_campania").modal("show");
-    document.getElementById("title-campania").innerHTML = "Modificar Campaña";
-    document.getElementById("form_campania").reset();
-   
-    document.getElementById("Registrar_campania").style.display = "none";
-    document.getElementById("Modificar_campania").style.display = "block";
-
-    //recuperando los datos
-    var table = $('#table_campanias').DataTable();
-    $info = table.row($(this).closest('tr')).data();
-    document.getElementById("mod_id_camp").value=$info["id_camp"];
-    document.getElementById("desc_camp").value=$info["desc_camp"];
-   
-});
-//editamos la compaña
-document.getElementById("Modificar_campania").addEventListener("click", async function(){
-    $valida = valida_campania();
-    if($valida){
-            const postData = { 
-                desc_camp:document.getElementById("desc_camp").value,
-                id_camp:document.getElementById("mod_id_camp").value,
-                // id_user:1,
-                // est_camp:1,      
-            };
-            try {
-                $.ajax({
-                    method: "POST",
-                    url: base_url+"main/updateCompania",
-                    data: postData,
-                    dataType: "JSON"
-                })
-                .done(function(respuesta) {
-                    if (respuesta) 
-                    {
-                    
-                        document.getElementById("form_campania").reset();
-                        $("#table_campanias").DataTable().ajax.reload(null, false); 
-                        $('#modal_campania').modal('hide');
-                        alerta.innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
-                            'Campaña Modificada'+
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-                                '<span aria-hidden="true">&times;</span>'+
-                                '</button>'+
-                        '</div>';
-                    } 
-                    else
-                    {
-                        alerta.innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
-                        'Error al Modificar'+
-                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-                            '<span aria-hidden="true">&times;</span>'+
-                            '</button>'+
-                    '</div>';  
-                    }
-                
-                })
-                .fail(function(error) {
-                    // alert("Error en el ajax");
-                })
-                .always(function() {
-                });
-            }
-            catch(err) {
-                // alert("Error en el try");
-            }
-        
+window.addEventListener("load", () => {
+    $datos = document.querySelectorAll('.datos .row .edit');
+    $cancel = document.querySelectorAll('.datos .row .cancel');
+    $datos.forEach((btn,i) => {
        
-    }
+        btn.addEventListener('click',()=>editarCampania(btn));
+    });
    
-});
-//eliminamos la campaña
-$('#table_campanias tbody').on( 'click', 'deleteCamp', function(){
-//recuperando los datos
-    var table = $('#table_campanias').DataTable();
-    $info = table.row($(this).closest('tr')).data();
-    Swal.fire({
-        title: 'Eliminar',
-        text: "¿Está seguro de eliminar esta campaña?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: "#5664d2",
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Eliminar!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-            const postData = { 
-                id_camp:$info["id_camp"],   
-            };
-            try {
-                $.ajax({
-                    method: "POST",
-                    url: base_url+"main/deleteCompania",
-                    data: postData,
-                    dataType: "JSON"
-                })
-                .done(function(respuesta) {
-                    if (respuesta) 
-                    {
-                    
-                
-                        $("#table_campanias").DataTable().ajax.reload(null, false); 
-                
-                        alerta.innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
-                            'Campaña Eliminada'+
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-                                '<span aria-hidden="true">&times;</span>'+
-                                '</button>'+
-                        '</div>';
-                    } 
-                    else
-                    {
-                        alerta.innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+
-                        'Error al Eliminar'+
-                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-                            '<span aria-hidden="true">&times;</span>'+
-                            '</button>'+
-                    '</div>';  
-                    }
-                
-                })
-                .fail(function(error) {
-                    // alert("Error en el ajax");
-                })
-                .always(function() {
-                });
-            }
-            catch(err) {
-                // alert("Error en el try");
-            }
-        //   Swal.fire(
-        //     'Eliminado!',
-        //     'Tu .',
-        //     'success'
-        //   )
-        }
-        })
-    
-   
-});
+    $cancel.forEach((btn,i) => {
+        
+        btn.addEventListener('click',()=>cancelCampania(btn));
+    });
+})
+
+

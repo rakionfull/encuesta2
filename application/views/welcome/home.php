@@ -17,8 +17,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <span>BIENVENIDO A LA DASHBOARD</span>
-                            <span>aqui ira el contenido de la pagina</span>
+                            <p>BIENVENIDO A LA DASHBOARD</p>
+                            <!-- segun la idcall de la sesion -->
+                            <p>Usuario: Admin Cliente Telefonica</p> 
                         </div>
                     </div>
                 </div>
