@@ -33,10 +33,38 @@ class Main extends CI_Controller {
         //     redirect('login');
         // }
     }
+    public function manEncuestas($id_camp){
+        // if(  $this->session->userdata('USUARIO_logeado')){
+           
+            $data['campania'] = $this->mcampania->getCampania($id_camp);
+            $data['encuestas'] = $this->mformulario->getEncuestas($id_camp);
+           $this->layout->view('manEncuestas',$data);
+        // }else{
+        //     redirect('login');
+        // }
+    }
+    public function manPreguntas($id_form){
+        // if(  $this->session->userdata('USUARIO_logeado')){
+           
+            $data['encuesta'] = $this->mformulario->getEncuesta($id_form);
+            // $data['preguntas'] = $this->mpregunta->getPreguntas($id_form);
+           $this->layout->view('manPreguntas',$data);
+        // }else{
+        //     redirect('login');
+        // }
+    }
+
+
     public function validaCampania(){
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $idcall=1;
             $resultado=$this->mcampania->verificarCampania(trim($_POST["desc_camp"]),$idcall);
+            echo json_encode($resultado);
+        }
+    }
+    public function validaEncuesta(){
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            $resultado=$this->mformulario->verificarEncuesta(trim($_POST["desc_enc"]),trim($_POST["id_camp"]));
             echo json_encode($resultado);
         }
     }
@@ -109,6 +137,7 @@ class Main extends CI_Controller {
     //         redirect('main/manCampanias');
     //     }
     // }
+    //crud de campaña
     public function registerCompania(){
         if($_SERVER["REQUEST_METHOD"] == "POST")
 		    {
@@ -195,41 +224,95 @@ class Main extends CI_Controller {
                         }
 	
     }
-    // public function formularios($id_camp){
-    //     $data['id_camp'] = $id_camp;
-    //     $this->layout->view('formularios',$data);
-    // }
-    
-    // public function getFormularios($id_camp){
-    //     // $idcall=1;
-    //     $data = $this->mformulario->getFormularios($id_camp);
-    //     $resultados = array();
-    //     $count=1;
-    //     foreach ($data as $resultado) {
-    //       $NuevaData=[
-    //         "numero"=> $count,
-    //         'desc_camp'  => $resultado -> desc_camp,
-    //         'est_camp'  => $resultado -> est_camp,
-    //         'fecha_reg'  => $resultado -> fecha_reg,
-    //         'id_camp'  => $resultado -> id_camp,
-    //         'id_user'  => $resultado -> id_user,
-    //       ];
-    //       $resultados[] = $NuevaData;
-    //       $count = $count + 1;
-    //     }
-        
-    //     $datos = [
-    //       "sEcho" => 1,
-    //       "iTotalRecords" => count($resultados),
-    //       "iTotalDisplayRecords" => count($resultados),
-    //       "aaData" => $resultados 
-    //     ];
-        
-    //     echo json_encode($datos);
-    // }
-    // public function createForm(){
-    //     $this->layout->view('createForm');
-    // }
+    // crud de encuesta
+    public function registerEncuesta(){
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+		    {
+                    $idcall=1;
+					$fecha_creacion= date("Y-m-d H:i:s");     
+					$datos = array(
+						'desc_form'  => trim($_POST["desc_enc"]),
+                        'est_form' => 1,
+                        'email' => 0,
+                        'id_camp' => trim($_POST["id_camp"]),
+                        'id_user' => 1, //recordar cambiarlo
+                        'fecha_exp'  => $fecha_creacion,
+						'fecha_reg'  => $fecha_creacion,
+					
+					);
+				
+						$resultado=$this->mformulario->saveEncuesta($datos);
+                        echo json_encode($resultado);
+
+			}else{
+				echo  json_encode(false);
+			}
+    }
+    public function updateEncuesta($id_camp,$id_enc){
+        if($this->input->post()){
+          
+                $datos = array(
+                    'desc_form'  => trim($this->input->post('desc_enc_'.$id_enc)),
+                );
+                try
+                {
+                        $resultado=$this->mformulario->updateEncuesta($id_enc,$datos);
+                        if($resultado){
+                            $this->session->set_flashdata('error',' <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Encuesta Modificada
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>');
+                                redirect('main/manEncuestas/'.$id_camp);
+                        }else{
+                            $this->session->set_flashdata('error',' <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Error al Modificar
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>');
+                        redirect('main/manEncuestas/'.$id_camp);
+
+                        }
+                }
+                catch(PDOException $ex)
+                {
+                    $this->db->trans_rollback();
+                }   
+                
+        }else{
+			redirect('main/manEncuestas');
+		}
+					
+				
+						
+
+			
+    }
+    public function deleteEncuesta($id_camp,$id_enc){
+    				
+						$resultado=$this->mformulario->deleteEncuesta($id_enc);
+                        if($resultado){
+                            $this->session->set_flashdata('error',' <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Encuesta Eliminada
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>');
+                                redirect('main/manEncuestas/'.$id_camp);
+                        }else{
+                            $this->session->set_flashdata('error',' <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Error al Modificar
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>');
+                        redirect('main/manEncuestas/'.$id_camp);
+
+                        }
+	
+    }
     
 
     

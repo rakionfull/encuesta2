@@ -1,12 +1,4 @@
-    <div class="herramientas">
-		<ul>
-			<li><a href="" class="icon-facebook" id="add_pregunta" title="Agregar Pregunta"><i class="mdi mdi-plus-circle font-size-20"></i> </a></li>
-            <li><a href="" class="icon-twitter" title="Vista Previa"><i class="mdi mdi-eye font-size-20"></i> </a></li>
-			<!-- <li><a href="" target="_blank" class="icon-twitter"></a></li>
-			<li><a href="" target="_blank" class="icon-googleplus"></a></li>
-			<li><a href="" target="_blank" class="icon-pinterest"></a></li> -->
-		</ul>
-	</div>
+
         <!-- <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
@@ -135,4 +127,4 @@
                     
                 </div>
         </div>
-        <script src="<?=base_url('public/assets/js/createForm.js'); ?>"></script>
+        <!-- <script src="<?=base_url('public/assets/js/createForm.js'); ?>"></script> -->
