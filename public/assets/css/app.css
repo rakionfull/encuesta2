@@ -585,7 +585,7 @@ body[data-sidebar="dark"] #sidebar-menu ul li ul.sub-menu li a {
 body[data-sidebar="dark"].vertical-collpsed {
   min-height: 1400px; }
   body[data-sidebar="dark"].vertical-collpsed .vertical-menu #sidebar-menu > ul > li:hover > a {
-    background: #293041;
+    background: #1d5191;
     color: #d7e4ec; }
     body[data-sidebar="dark"].vertical-collpsed .vertical-menu #sidebar-menu > ul > li:hover > a i {
       color: #d7e4ec; }
@@ -779,7 +779,7 @@ body[data-sidebar="colored"].vertical-collpsed .vertical-menu #sidebar-menu ul l
   }
 
   .list-group-item{
-    padding: 0;
+    padding: 0.5em 2em;
   }
   .table td{
     padding: 0.2rem 0.75rem 0.2rem 0.75rem;

@@ -15,6 +15,15 @@ class Mcampania extends CI_MODEL
         ->result();
         return $query->result();
     }
+     //obtener las campania
+     public function getCampania($id_camp) {
+        return $this->db->select("*") # También puedes poner * si quieres seleccionar todo
+        ->from("campanias")
+        ->where('id_camp',$id_camp)
+        ->get()
+        ->result();
+        return $query->result();
+    }
     //insertar la campania
     public function saveCampania($datos)
 	{

@@ -54,7 +54,7 @@ document.getElementById("add_campania").addEventListener("click",function(event)
     event.preventDefault();   
     document.getElementById("error_desc_camp").innerHTML='';                   
    document.getElementById("form_reg_campania").style.display = "block";
-
+   document.form_campania.desc_camp.focus();
   
 
 });
