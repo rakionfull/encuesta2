@@ -27,6 +27,7 @@
         <link href="<?=base_url('public/assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="<?=base_url('public/assets/css/app.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('public/assets/css/home.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
         <!-- js principales -->
         <script src="<?=base_url('public/assets/libs/jquery/jquery.min.js'); ?>"></script>
         <script src="<?=base_url('public/assets/libs/datatables.net/js/jquery.dataTables.min.js'); ?>"></script>
@@ -38,7 +39,7 @@
         <link href="<?=base_url('public/assets/libs/sweetalert2/sweetalert2.min.css'); ?>" rel="stylesheet" type="text/css" />
         <script src="https://unpkg.com/sortablejs-make/Sortable.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-      
+		<script src="https://kit.fontawesome.com/bbc732d875.js" crossorigin="anonymous"></script>
     </head>
 
 
