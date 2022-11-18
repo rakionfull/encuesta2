@@ -38,7 +38,8 @@
         <link href="<?=base_url('public/assets/libs/sweetalert2/sweetalert2.min.css'); ?>" rel="stylesheet" type="text/css" />
         <script src="https://unpkg.com/sortablejs-make/Sortable.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-      
+       <!-- twitter-bootstrap-wizard css -->
+       <link rel="stylesheet" href="<?=base_url('public/assets/libs/twitter-bootstrap-wizard/prettify.css'); ?>">
     </head>
 
 
@@ -76,14 +77,14 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#fff">
                                 <img class="rounded-circle header-profile-user" src="<?=base_url('public/images/avatar_login.png') ?>"
                                     alt="Header Avatar">
-                                <span class="d-none d-xl-inline-block ml-1" >Usuario</span>
+                                <span class="d-none d-xl-inline-block ml-1" ><?php echo $this->session->userdata('usuario');?></span>
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <!-- item-->
-                                <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i> Perfil</a>
+                                <a class="dropdown-item" href=""><i class="ri-user-line align-middle mr-1"></i> Perfil</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i> Logout</a>
+                                <a class="dropdown-item text-danger" href="<?=base_url()?>auth/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i> Logout</a>
                             </div>
                         </div>
 
@@ -116,18 +117,24 @@
                                     <span>Campañas</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
+                                  
+                                    <?php  if($this->session->userdata('idcall') == 2){?>
+                                    <li><a href="<?=base_url('Asesor/listCampanias') ?>">Listado Asesor</a></li>
+                                    <?php  }else{ ?>
                                     <li><a href="<?=base_url('Main/listCampanias') ?>">Listado</a></li>
                                     <li><a href="<?=base_url('Main/manCampanias') ?>">Mantenimiento</a></li>
-                                    
+                                    <?php  } ?>
                                 </ul>
                             </li>
                 
                             <li>
                             <li>
+                            <?php  if($this->session->userdata('idcall') != 2){?>
                                 <a href="apps-chat.html" class=" waves-effect">
                                     <i class="fas fa-users"></i>
                                     <span>Clientes</span>
                                 </a>
+                            <?php  } ?>
                             </li>
 
                            

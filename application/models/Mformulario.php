@@ -15,6 +15,14 @@ class Mformulario extends CI_MODEL
         ->result();
         return $query->result();
     }
+    public function allEncuestas($id_cliente) {
+        return $this->db->select("*") # También puedes poner * si quieres seleccionar todo
+        ->from("campanias")
+        ->join("formularios", "formularios.id_camp = campanias.id_camp")
+        ->where('campanias.id_cliente',$id_cliente)
+        ->get()
+        ->result();
+    }
     public function getEncuesta($id_form) {
         return $this->db->select("*") # También puedes poner * si quieres seleccionar todo
         ->from("formularios")

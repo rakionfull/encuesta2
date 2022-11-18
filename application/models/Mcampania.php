@@ -7,10 +7,10 @@ class Mcampania extends CI_MODEL
         parent::__construct();
     }
    //obtener las campanias registradas
-    public function getCampanias($idcall) {
+    public function getCampanias($id_cliente) {
         return $this->db->select("*") # También puedes poner * si quieres seleccionar todo
         ->from("campanias")
-        ->where('idcall',$idcall)
+        ->where('id_cliente',$id_cliente)
         ->get()
         ->result();
         return $query->result();
@@ -29,9 +29,9 @@ class Mcampania extends CI_MODEL
 	{
 		return $this->db->insert('campanias', $datos);
 	}
-    public function verificarCampania($desc_camp,$idcall){
+    public function verificarCampania($desc_camp,$id_cliente){
         $this->db->where('desc_camp',$desc_camp);
-        $this->db->where('idcall',$idcall);
+        $this->db->where('id_cliente',$id_cliente);
         $query=$this->db->get('campanias');
         //devolvem,os el numero de files que conciden
         if($query->num_rows() == 0){

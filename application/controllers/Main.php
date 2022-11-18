@@ -11,6 +11,7 @@ class Main extends CI_Controller {
         $this->load->helper('url');
         $this->load->model('mcampania');
         $this->load->model('mformulario');
+        $this->load->model('mpregunta');
     }
 	
 
@@ -24,41 +25,41 @@ class Main extends CI_Controller {
         // }
     }
     public function manCampanias(){
-        // if(  $this->session->userdata('USUARIO_logeado')){
-            $idcall=1;
-            $data['campanias'] = $this->mcampania->getCampanias($idcall);
+        if( $this->session->userdata('USUARIO_logeado')){
+            $id_cliente=$this->session->userdata('id_cliente');
+            $data['campanias'] = $this->mcampania->getCampanias($id_cliente);
            
            $this->layout->view('manCampanias',$data);
-        // }else{
-        //     redirect('login');
-        // }
+        }else{
+            redirect('Auth/login');
+        }
     }
     public function manEncuestas($id_camp){
-        // if(  $this->session->userdata('USUARIO_logeado')){
-           
+        if(  $this->session->userdata('USUARIO_logeado')){
             $data['campania'] = $this->mcampania->getCampania($id_camp);
             $data['encuestas'] = $this->mformulario->getEncuestas($id_camp);
            $this->layout->view('manEncuestas',$data);
-        // }else{
-        //     redirect('login');
-        // }
+        }else{
+           redirect('Auth/login');
+        }
     }
     public function manPreguntas($id_form){
-        // if(  $this->session->userdata('USUARIO_logeado')){
+        if(  $this->session->userdata('USUARIO_logeado')){
            
             $data['encuesta'] = $this->mformulario->getEncuesta($id_form);
-            // $data['preguntas'] = $this->mpregunta->getPreguntas($id_form);
+            $data['preguntas'] = $this->mpregunta->getPreguntas($id_form);
+            $data['opciones'] = $this->mpregunta->getOpciones($id_form);
            $this->layout->view('manPreguntas',$data);
-        // }else{
-        //     redirect('login');
-        // }
+        }else{
+            redirect('Auth/login');
+        }
     }
 
 
     public function validaCampania(){
         if($_SERVER["REQUEST_METHOD"] == "POST"){
-            $idcall=1;
-            $resultado=$this->mcampania->verificarCampania(trim($_POST["desc_camp"]),$idcall);
+            $id_cliente=$this->session->userdata('id_cliente');
+            $resultado=$this->mcampania->verificarCampania(trim($_POST["desc_camp"]),$id_cliente);
             echo json_encode($resultado);
         }
     }
@@ -68,86 +69,24 @@ class Main extends CI_Controller {
             echo json_encode($resultado);
         }
     }
-    // public function getCampanias(){
-    //     //falta tener el idcall (servura oara identificar los clientes)
-    //     $idcall=1;
-    //     $data = $this->mcampania->getCampanias($idcall);
-
-    //     echo json_encode($data);
-    // }
-    // public function registerCompania(){
-    //     if($this->input->post()){
-    //         $this->form_validation->set_rules(
-    //             'desc_camp','desc_camp',
-    //             'required|min_length[6]|is_unique[encuestas.campanias]',
-    //             array(
-    //                     'required'      => 'Debes Ingresar %s.',
-    //                     'is_unique'     => 'Este %s ya esta registrado.'
-    //             )
-    //         );
-
-    //         if ($this->form_validation->run() == FALSE)
-    //         {
-    //             $idcall=1;
-    //             $data['campanias'] = $this->mcampania->getCampanias($idcall);
-               
-    //            $this->layout->view('manCampanias',$data);
-    //         }
-    //         else
-    //         {
-
-    //             $idcall=1;
-    //             $fecha_creacion= date("Y-m-d H:i:s");     
-    //             $datos = array(
-    //                 'desc_camp'  => trim($this->input->post('desc_camp')),
-    //                 'est_camp' => 1,
-    //                 'idcall' => $idcall,
-    //                 'id_user' => 1, //recordar cambiarlo
-    //                 'fecha_reg'  => $fecha_creacion,
-    //             );
-    //             try
-    //             {
-    //                     $resultado=$this->mcampania->saveCampania($datos);
-    //                     if($resultado){
-    //                         $this->session->set_flashdata('error',' <div class="alert alert-success alert-dismissible fade show" role="alert">
-    //                             Campaña Registrada
-    //                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    //                                     <span aria-hidden="true">&times;</span>
-    //                                 </button>
-    //                             </div>');
-    //                             redirect('main/manCampanias');
-    //                     }else{
-    //                         $this->session->set_flashdata('error',' <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    //                         Error al Registrar
-    //                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    //                             <span aria-hidden="true">&times;</span>
-    //                         </button>
-    //                     </div>');
-    //                     redirect('main/manCampanias');
-
-    //                     }
-    //             }
-    //             catch(PDOException $ex)
-    //             {
-    //                 $this->db->trans_rollback();
-    //             }   
-    //         }
-            
-    //     }else{
-    //         redirect('main/manCampanias');
-    //     }
-    // }
+    public function validaPregunta(){
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            $resultado=$this->mpregunta->verificarPreguntas(trim($_POST["titulo_pregunta"]),trim($_POST["id_enc"]));
+            echo json_encode($resultado);
+        }
+    }
+  
     //crud de campaña
     public function registerCompania(){
         if($_SERVER["REQUEST_METHOD"] == "POST")
 		    {
-                    $idcall=1;
+                    $id_cliente=$this->session->userdata('id_cliente');
 					$fecha_creacion= date("Y-m-d H:i:s");     
 					$datos = array(
 						'desc_camp'  => trim($_POST["desc_camp"]),
                         'est_camp' => 1,
-                        'idcall' => $idcall,
-                        'id_user' => 1, //recordar cambiarlo
+                        'id_cliente' => $id_cliente,
+                        'id_user' => $this->session->userdata('id_user'), //recordar cambiarlo
 						'fecha_reg'  => $fecha_creacion,
 					
 					);
@@ -228,14 +167,13 @@ class Main extends CI_Controller {
     public function registerEncuesta(){
         if($_SERVER["REQUEST_METHOD"] == "POST")
 		    {
-                    $idcall=1;
+                    $id_cliente=1;
 					$fecha_creacion= date("Y-m-d H:i:s");     
 					$datos = array(
 						'desc_form'  => trim($_POST["desc_enc"]),
                         'est_form' => 1,
-                        'email' => 0,
                         'id_camp' => trim($_POST["id_camp"]),
-                        'id_user' => 1, //recordar cambiarlo
+                        'id_user' => $this->session->userdata('id_user'), //recordar cambiarlo
                         'fecha_exp'  => $fecha_creacion,
 						'fecha_reg'  => $fecha_creacion,
 					
@@ -313,7 +251,58 @@ class Main extends CI_Controller {
                         }
 	
     }
-    
+    //crud de preguntas y opciones
+    public function registerPregunta(){
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+		    {
+                // var_dump($_POST["opciones"]);  
+                // echo  json_encode($_POST["opciones"]);  
+                    $id_cliente=1;
+					$fecha_creacion= date("Y-m-d H:i:s");
+                    //traigo la posicion que le tocara
+                   $result= $this->mpregunta->posPregunta(trim($_POST["id_enc"]));
+                   $posicion=1;
+                   if($result){
+                    $posicion = $result[0]->posicion + 1;
+                   }
+
+					$datos = array(
+						'desc_preg'  => trim($_POST["titulo_pregunta"]),
+                        'obligatorio_preg' => trim($_POST["obligatorio"]),
+                        'visible_preg' => 1,
+                        'pos_preg'=> $posicion,
+                        'id_form ' => trim($_POST["id_enc"]),
+						'fecha_reg'  => $fecha_creacion,
+					
+					);
+				
+                    $this->db->trans_begin();
+                    $this->mpregunta->savePreguntas($datos);
+                    $id_pregunta = $this->db->insert_id();
+                    if($_POST["opciones"] != 0){
+                         for ($i=0; $i < count($_POST["opciones"]); $i++) { 
+                            $data = array(
+                                'desc_op'  =>$_POST["opciones"][$i],
+                                'id_preg'  => $id_pregunta,
+                                'evento'  =>$_POST["eventos"][$i],
+                            );
+                            $this->mpregunta->setOpcion($data);
+                       
+                         }
+                      
+                    }
+                    // echo json_encode(($_POST["opciones"][0]));
+                    $this->db->trans_commit();
+                    // echo json_encode($_POST["opciones"]);
+                    // if($id_pregunta){
+                    //     echo json_encode($id_pregunta);
+                    // }
+                    echo  json_encode(true);
+
+			}else{
+				echo  json_encode(false);
+			}
+    }
 
     
 }

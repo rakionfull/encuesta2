@@ -81,6 +81,107 @@ File: Main Css File
   padding: 0 calc(24px / 2) 0 0; }
   .navbar-header .dropdown.show .header-item {
     background-color: transparent; }
+    .user-box input {
+      position: relative;
+      width: 100%;
+      padding: 5px 5px;
+      font-size: 14px;
+      color: #505d69;
+      margin-bottom: 0px;
+      border: none;
+      border-bottom: 1px solid #505d69;
+      outline: none;
+      background: transparent;
+  }
+  .card_encuesta{
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+  }
+  .card_campania{
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 5px
+  }
+  .card_campania:hover{
+    background: #219675;
+    color: #fff;
+  }
+  /* .card_campania a:hover{
+    background: #219675;
+    color: #fff;
+  } */
+ 
+  .card_campania a{
+    color: #505d69;
+  }
+  .card_encuesta{
+    color: #505d69;
+  }
+  .activado{
+   background: #219675;
+   color: #fff;
+  }
+  .active_enc{
+    background: #1d5191;
+    color: #fff;
+  }
+  .card_encuesta:hover{
+    background: #1d5191;
+    color: #fff;
+  }
+  .activado i{
+    color: #fff;
+  }
+  .step-line {
+    background: #1d5191;
+    height: 2px;
+    width: 35vw;
+    position: absolute;
+    top: 60px;
+    z-index: 1;
+  }
+  .nav-pills.custom li {
+    background: transparent;
+    margin: 0 0px;
+    z-index: 2;
+  }
+  .nav-link.active.custom {
+    background-color: transparent;
+    color: #007bff;
+  }
+  .nav-link.custom {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 12vw;
+  }
+  .nav-link.custom span.icon {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 50px;
+    width: 46px;
+    height: 46px;
+    margin: 0 auto;
+  }
+  .nav-link.custom.active span.icon {
+    background-color: #007bff;
+    color: #fff;
+  }
+  .nav-link.custom i {
+    font-size: 28px;
+  }
+  .tab-content.custom {
+    display: flex;
+    justify-content: center;
+  }
+  .tab-content.custom .tab-pane {
+    width: 50vw;
+  }
 
 .navbar-brand-box {
   padding: 0 1.5rem;
@@ -784,18 +885,7 @@ body[data-sidebar="colored"].vertical-collpsed .vertical-menu #sidebar-menu ul l
   .table td{
     padding: 0.2rem 0.75rem 0.2rem 0.75rem;
   }
-  .user-box input {
-    position: relative;
-    width: 100%;
-    padding: 5px 5px;
-    font-size: 14px;
-    color: #505d69;
-    margin-bottom: 0px;
-    border: none;
-    border-bottom: 1px solid #505d69;
-    outline: none;
-    background: transparent;
-}
+
   .table .thead-light th {
     color: #ffffff;
     background-color: #273570;
@@ -2527,7 +2617,7 @@ div.dt-button-info {
     content: "";
     width: 100%;
     height: 2px;
-    background-color: #f1f5f7;
+    background-color: #1d5191;
     position: absolute;
     left: 0;
     top: 26px; }
