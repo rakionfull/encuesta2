@@ -5,13 +5,8 @@
 					<h4 class="title-dashboard">Sistema de encuestas Valtx</h4>
                 </div>
             </div>
-<<<<<<< HEAD
         </div> -->
         <div class="row">
-=======
-        </div>
-		<div class="row">
->>>>>>> 6b56be0c3a7271d6147ca4b4f154ef15b9de0e52
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
