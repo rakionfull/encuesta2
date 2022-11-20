@@ -37,7 +37,7 @@
 						<div class="row justify-content-end">
 								<p>
 									<?php
-										echo $days[date("N")];
+										echo $days[date("L")];
 										echo " ";
 										echo date("d")."/".date("m")."/".date("Y")
 									?>
@@ -61,7 +61,7 @@
 						<div class="row justify-content-end">
 							<p>
 								<?php
-									echo $days[date("N")];
+									echo $days[date("L")];
 									echo " ";
 									echo date("d")."/".date("m")."/".date("Y")
 								?>
