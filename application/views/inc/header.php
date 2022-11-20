@@ -39,12 +39,9 @@
         <link href="<?=base_url('public/assets/libs/sweetalert2/sweetalert2.min.css'); ?>" rel="stylesheet" type="text/css" />
         <script src="https://unpkg.com/sortablejs-make/Sortable.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-<<<<<<< HEAD
        <!-- twitter-bootstrap-wizard css -->
        <link rel="stylesheet" href="<?=base_url('public/assets/libs/twitter-bootstrap-wizard/prettify.css'); ?>">
-=======
 		<script src="https://kit.fontawesome.com/bbc732d875.js" crossorigin="anonymous"></script>
->>>>>>> 6b56be0c3a7271d6147ca4b4f154ef15b9de0e52
     </head>
 
 
@@ -151,5 +148,6 @@
             </div>
     <div class="main-content">
         <input type="hidden" name="" id="base_url" value=<?=base_url()?>>
+       
         <div class="page-content">
             <div class="container-fluid">

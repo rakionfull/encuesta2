@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 class Asesor extends CI_Controller {
     public function __construct()
     {
@@ -14,7 +15,6 @@ class Asesor extends CI_Controller {
         $this->load->model('mpregunta');
         $this->load->model('mdetalle');
     }
-	
 
     public function listCampanias(){
         // if(  $this->session->userdata('USUARIO_logeado')){

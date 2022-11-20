@@ -5,13 +5,10 @@
 					<h4 class="title-dashboard">Sistema de encuestas Valtx</h4>
                 </div>
             </div>
-<<<<<<< HEAD
         </div> -->
-        <div class="row">
-=======
-        </div>
+        
+       
 		<div class="row">
->>>>>>> 6b56be0c3a7271d6147ca4b4f154ef15b9de0e52
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -82,7 +79,7 @@
 		</div>
         
 		<div class="row">
-		<section class="col-lg-6 col-md-6 connectedSortable">
+			<section class="col-lg-6 col-md-6 connectedSortable">
         		<!-- Custom tabs (Charts with tabs)-->
         		<div class="card">
         			<div class="card-header">

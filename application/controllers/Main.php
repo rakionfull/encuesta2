@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+// use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class Main extends CI_Controller {
     public function __construct()
     {
@@ -12,17 +15,20 @@ class Main extends CI_Controller {
         $this->load->model('mcampania');
         $this->load->model('mformulario');
         $this->load->model('mpregunta');
+        $this->load->model('mdetalle');
     }
 	
 
     public function listCampanias(){
-        // if(  $this->session->userdata('USUARIO_logeado')){
+        if(  $this->session->userdata('USUARIO_logeado')){
         
-           
-           $this->layout->view('listCampanias');
-        // }else{
-        //     redirect('login');
-        // }
+            $id_cliente=$this->session->userdata('id_cliente');
+            $data['campanias'] = $this->mcampania->getCampanias($id_cliente);
+            $data['encuestas'] = $this->mformulario->allEncuestas($id_cliente);
+           $this->layout->view('listCampanias',$data);
+        }else{
+            redirect('Auth/login');
+        }
     }
     public function manCampanias(){
         if( $this->session->userdata('USUARIO_logeado')){
@@ -303,6 +309,60 @@ class Main extends CI_Controller {
 				echo  json_encode(false);
 			}
     }
+    public function reporteEncuesta($id_enc){
+       
 
+        $data   =   $this->mdetalle->camposEncuesta($id_enc);
+        $columns = [];
+        for ($i = 0; $i < count($data); $i++) {
+            $columns[] = $data[$i]->name;
+        }
+        $datos = $this->mdetalle->reporteEncuesta($id_enc);
+    
+
+        $documento = new Spreadsheet();
+        $documento
+            ->getProperties()
+            ->setCreator("Valtx")
+            ->setLastModifiedBy('Valtx')
+            ->setTitle('Archivo exportado desde MySQL')
+            ->setDescription('Un archivo de Excel exportado desde MySQL por Valtx');
+        
+        # Como ya hay una hoja por defecto, la obtenemos, no la creamos
+        $hojaDeReporte = $documento->getActiveSheet();
+        $hojaDeReporte->setTitle("Reporte");
+        
+        # Escribir encabezado
+        $encabezado = $columns;
+        # El último argumento es por defecto A1 pero lo pongo para que se explique mejor
+        $hojaDeReporte->fromArray($encabezado, null, 'A1');
+        
+        $consulta = $datos;
+       
+        # Comenzamos en la 2 porque la 1 es del encabezado
+        $numeroDeFila = 2;
+             foreach ($datos as $result) {
+                 # Obtener los datos de la base de datos
+                 for ($i=0; $i < count($columns) ; $i++) { 
+                    $columna = $columns[$i];
+                    $hojaDeReporte->setCellValueByColumnAndRow($i+1, $numeroDeFila, $result->$columna);
+                   
+                 }
+              
+                $numeroDeFila++;
+            
+            }
+     
+        #
+        # Crear un "escritor"
+      
+        $writer = new Xlsx($documento);
+        $fecha_creacion= date("Y-m-d");     
+        # Le pasamos la ruta de guardado
+        $ruta='reporte-'.$id_enc.'-'.$fecha_creacion.'.xlsx';
+        $writer->save('./public/assets/reportes/'.$ruta);
+        echo json_encode($ruta);
+       
+    }
     
 }
