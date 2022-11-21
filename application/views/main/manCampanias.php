@@ -65,7 +65,7 @@
                                                         <span class=" fas fa-pencil-alt icon font-size-20"></span> </a>
                                                         <a href="<?php echo base_url();?>main/deleteCampania/<?php echo($value->id_camp); ?>" class="btn text-danger"  data-toggle="tooltip" data-placement="top" title="Eliminar"> 
                                                         <span class="fas fa-trash-alt icon font-size-20"></span> </a>
-                                                        <a href="<?php echo base_url();?>main/manEncuestas/<?php echo($value->id_camp); ?>" class="btn text-info"  data-toggle="tooltip" data-placement="top" title="Formularios"> 
+                                                        <a href="<?php echo base_url();?>encuestas/<?php echo($value->id_camp); ?>" class="btn text-info"  data-toggle="tooltip" data-placement="top" title="Formularios"> 
                                                         <span class=" fas fa-arrow-right icon font-size-20"></span> </a>
                                                     </div>
                                                     

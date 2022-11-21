@@ -22,50 +22,7 @@
                                
             </div>
     </div>      
-            <!-- <?php foreach ($campanias as $key => $value) { ?>
-                <div class="campania" id="campania_<?php echo($value->id_camp) ?>">
-              
-                    <div class="row card_campania" id="camp_<?php echo($value->id_camp) ?>">
-                   
-                        <div class="col-md-11">
-                            <span><?php echo($value->desc_camp) ?></span>
-                        
-                        </div>
-                        <div class="col-md-1 bajar" id="con_bajar_<?php echo($value->id_camp) ?>">
-                            <a href="" id="bajar_<?php echo($value->id_camp) ?>"><i class=" fas fa-angle-down font-size-20"></i></a>
-                            
-                        </div>
-                        <div class="col-md-1 subir" id="con_subir_<?php echo($value->id_camp) ?>" style="display:none">
-                            <a href="" id="subir_<?php echo($value->id_camp) ?>" ><i class=" fas fa-angle-up font-size-20"></i></a>
-                            
-                        </div>
-                    </div>
-                    <div id="caja_<?php echo($value->id_camp) ?>" style="display:none">
-                        <div class="card">
-                            <div class="card-header">
-                            <?php foreach ($encuestas as $encuesta => $valor) {
-                                    if($value->id_camp == $valor->id_camp){
-                                ?>
-                                <a href="" id="encuesta_<?php echo($valor->id_form) ?>" class="encuesta">
-                                    <div class="row card_encuesta">
-                                        <div class="col-md-11">
-                                            <span><?php echo($valor->desc_form) ?></span>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <i class=" fas fa-arrow-right font-size-15"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                                
-                            <?php }} ?>
-                                
-                               
-                            </div>  
-                        </div>
-                    
-                    </div>
-                </div>
-            <?php } ?> -->
+          
             
 </div>
 <div class="row">

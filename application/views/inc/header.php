@@ -121,10 +121,10 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                   
                                     <?php  if($this->session->userdata('idcall') == 2){?>
-                                    <li><a href="<?=base_url('Asesor/listCampanias') ?>">Listado Asesor</a></li>
+                                    <li><a href="<?=base_url('listCamp') ?>">Listado</a></li>
                                     <?php  }else{ ?>
-                                    <li><a href="<?=base_url('Main/listCampanias') ?>">Listado</a></li>
-                                    <li><a href="<?=base_url('Main/manCampanias') ?>">Mantenimiento</a></li>
+                                    <li><a href="<?=base_url('listado') ?>">Listado</a></li>
+                                    <li><a href="<?=base_url('mantenimiento') ?>">Mantenimiento</a></li>
                                     <?php  } ?>
                                 </ul>
                             </li>
