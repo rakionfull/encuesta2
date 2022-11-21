@@ -19,24 +19,28 @@ class Welcome extends CI_Controller {
     }
 	
 	public function home(){
-		$companies_array = array();
-		$query = $this->db->query('SELECT count(*) as cantidad FROM campanias');
-		foreach ($query->result() as $row) {
-			array_push($companies_array,$row->cantidad);
-		}	
-
-		$detalle_encuesta_array = array();
-		$query = $this->db->query('SELECT count(*) as cantidad FROM detalle_encuesta');
-		foreach ($query->result() as $row) {
-			array_push($detalle_encuesta_array,$row->cantidad);
-		}	
-		$data = [
-			'companies_array' => $companies_array[0],
-			'detalle_encuesta_array' => $detalle_encuesta_array[0],
-			'days' => $this->days
-		];	
-		$this->layout->view('home',$data);
+		if(  $this->session->userdata('USUARIO_logeado')){
+			$companies_array = array();
+			$query = $this->db->query('SELECT count(*) as cantidad FROM campanias');
+			foreach ($query->result() as $row) {
+				array_push($companies_array,$row->cantidad);
+			}	
 		
+
+			$detalle_encuesta_array = array();
+			$query = $this->db->query('SELECT count(*) as cantidad FROM detalle_encuesta');
+			foreach ($query->result() as $row) {
+				array_push($detalle_encuesta_array,$row->cantidad);
+			}	
+			$data = [
+				'companies_array' => $companies_array[0],
+				'detalle_encuesta_array' => $detalle_encuesta_array[0],
+				'days' => $this->days
+			];	
+			$this->layout->view('home',$data);
+		}else{
+			redirect('Auth/login');
+		}
 	}
     
 

@@ -84,77 +84,13 @@ document.getElementById("add_pregunta").addEventListener("click",function(event)
     event.preventDefault();   
     document.getElementById("pregunta").style.display="block"; 
     document.form_pregunta.titulo_pregunta.focus();      
-    // document.getElementById("pregunta").innerHTML = '<ul class="list-group list-group-flush">'+
-    //                                                     '<div class="row">'+
-    //                                                         '<div class="col-lg-12 d-flex justify-content-center">'+
-    //                                                             '<i class="mdi mdi-drag font-size-24" data-toggle="tooltip" data-placement="top" title="" data-original-title="Arrastrar"></i>'+
-    //                                                         '</div>'+
-                                                        
-    //                                                     '</div>'+
-    //                                                     '<li class="list-group-item">'+
-    //                                                         '<div class="card-body ">'+
-    //                                                             '<div class="row mb-3">'+
-    //                                                                 '<div class="col-lg-12">'+
-    //                                                                     '<div class="form-group">'+
-    //                                                                         '<div class="user-box" id="">'+
-    //                                                                             '<input type="text"  name="" id="titulo_pregunta" required="" value="" placeholder="Título de la Pregunta">'+
-    //                                                                         '</div>'+
-                                                                        
-    //                                                                     '</div>'+
-    //                                                                 '</div>'+
-                                                                    
-    //                                                             '</div>'+
-    //                                                             '<div id="list_opcion">'+
-                                                                
-    //                                                             '</div>'+
-                                                                
-
-    //                                                                 '<div class="row">'+
-    //                                                                     '<div class="col-lg-12">'+
-    //                                                                         '<div class="form-group  mb-1">'+
-                                                                                
-    //                                                                                 '<a href="" id="add_opcion"   class="btn btn-link waves-effect ">'+
-    //                                                                                 '<i class=" fas fa-plus-circle align-middle mr-2"></i>Añadir Opción</a>'+
-                                                                                    
-                                                                                
-    //                                                                         '</div>'+
-    //                                                                     '</div>'+
-    //                                                                 '</div>'+
-    //                                                         '</div>'+
-    //                                                     '</li>'+
-    //                                                     '<li class="list-group-item">'+
-    //                                                             '<div class="row d-flex justify-content-end" >'+
-    //                                                                 '<div class="col-md-2">'+
-    //                                                                     '<div class="form-group">'+
-    //                                                                         '<a href="" class="text-success" id="guardar_pregunta" data-toggle="tooltip" data-placement="top" title=""><i class="mdi mdi-content-save font-size-18"></i> Guardar</a>'+
-    //                                                                     '</div>'+
-    //                                                                 '</div>'+
-    //                                                                 '<div class="col-md-2">'+
-    //                                                                     '<div class="form-group">'+
-    //                                                                         '<a href="" class="text-danger" id="delete_pregunta" data-toggle="tooltip" data-placement="top" title="" ><i class="mdi mdi-trash-can font-size-18"></i> Eliminar</a>'+
-    //                                                                     '</div>'+
-    //                                                                 '</div>'+
-    //                                                                 '<div class="col-md-2">'+
-    //                                                                     '<div class="form-group">'+
-    //                                                                         '<div class="custom-control custom-switch mb-1" dir="ltr">'+
-    //                                                                             '<input type="checkbox" class="custom-control-input" id="obligatorio_pregunta" checked>'+
-    //                                                                             '<label class="custom-control-label" for="obligatorio_pregunta">Obligatorio</label>'+
-    //                                                                         '</div>'+
-    //                                                                     '</div>'+
-    //                                                                 '</div>'+
-    //                                                             '</div>'+
-    //                                                     '</li>'+
-    //                                                 '</ul>';
-
+  
 
 });
 document.getElementById("registrar_pregunta").addEventListener("click", async function(event){
     event.preventDefault();
     document.getElementsByName("evento[]").forEach(element => {
-        // console.log(element.value);
-        // if(element.value.checked){
-        //    
-        // }
+       
     });
     $obligatorio = 0;
     $valida = valida_pregunta();
@@ -316,17 +252,40 @@ function addOpcion(element) {
     });
 }
 
+function verPreguntas(element) {
+    event.preventDefault();
+    $opcion = element.id.split('_');
+    document.getElementById("caja_"+$opcion[2]).style.display="block";
+    document.getElementById("con_bajar_"+$opcion[2]).style.display="none";
+    document.getElementById("con_subir_"+$opcion[2]).style.display="block";
+    
+}
+function ocultarPreguntas(element) {
+    event.preventDefault();
+    $opcion = element.id.split('_');
+    document.getElementById("caja_"+$opcion[2]).style.display="none";
+    document.getElementById("con_bajar_"+$opcion[2]).style.display="block";
+    document.getElementById("con_subir_"+$opcion[2]).style.display="none";
+    
+}
+
 window.addEventListener("load", () => {
    
     $opcion = document.querySelectorAll('.pregunta .list-group-item #add_opcion');
-    // $datos = document.querySelectorAll('.pregunta .list-group-item .check_opcion');
-      
+    $bajar = document.querySelectorAll('.pregunta .bajar');
+    $subir = document.querySelectorAll('.pregunta .subir');
+    console.log($bajar);
+    console.log($subir);
     // $cancel = document.querySelectorAll('.pregunta .row .cancel');
     $opcion.forEach((btn,i) => {   
         btn.addEventListener('click',()=>addOpcion(btn));
     });
-
-    
+    $bajar.forEach((btn,i) => {   
+        btn.addEventListener('click',()=>verPreguntas(btn));
+    });
+    $subir.forEach((btn,i) => {   
+        btn.addEventListener('click',()=>ocultarPreguntas(btn));
+    });
      
     
    

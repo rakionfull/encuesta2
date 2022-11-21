@@ -37,97 +37,99 @@
                             foreach ($preguntas as $pregunta => $value) { 
                                         
                         ?>
-                                     <!-- <form action="" id="form_pregunta" name="form_pregunta"> -->
+                                   
                                      <div class="card pregunta" id="pregunta_<?php echo($value->id_preg); ?>">
                                             <ul class="list-group list-group-flush">
-                                                <!-- <div class="row">
-                                                    <div class="col-lg-12 d-flex justify-content-center">
-                                                        <i class="mdi mdi-drag font-size-24" data-toggle="tooltip" data-placement="top" title="" data-original-title="Arrastrar"></i>
-                                                    </div>
-                                                
-                                                </div> -->
+                                              
                                                 <li class="list-group-item">
                                                     <div class="card-body ">
                                                         <div class="row mb-3">
-                                                            <div class="col-lg-12">
+                                                            <div class="col-lg-11">
                                                                 <div class="form-group">
                                                                     <div class="user-box" id="">
-                                                                        <input type="text"  name="titulo_pregunta" id="titulo_pregunta" required="" value="<?php echo($value->desc_preg) ?>" placeholder="Título de la Pregunta" disabled>
+                                                                        <input type="text"  name="titulo_pregunta_<?php echo($value->id_preg); ?>" id="titulo_pregunta_<?php echo($value->id_preg); ?>" required="" value="<?php echo($value->desc_preg) ?>" placeholder="Título de la Pregunta" disabled>
                                                                     </div>
                                                                     <div class="invalid-feedback" id="error_desc_preg">
                                            
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
-                                                        </div>
-                                                        <div id="list_opcion_<?php echo($value->id_preg); ?>">
-                                                            <?php 
-                                                               
-                                                                    foreach ($opciones as $opcion => $valor){
-                                                                    if($value->id_preg==$valor->id_preg){
-                                                                        
-                                                            ?>
-                                                            <div id="preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>" class="opcion_<?php echo($value->id_preg); ?>">
-                                                                <div class="d-flex flex-row">
-                                                                    <div class="custom-control custom-radio mb-3 col-lg-10">
-                                                                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                                                            
-                                                                                <label class="custom-control-label col-lg-12" for="customRadio1">
-                                                                                    <div class="user-box" id="">
-                                                                                    <input type="text" id="preg_opcion_<?php echo($valor->id_op); ?>" value="<?php echo($valor->desc_op); ?>" placeholder="Opcion" disabled>
-                                                                                    </div>
-                                                                                </label>
-                                                                    </div>
-                                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-2">
-                                                                        <a href="" class="text-danger remove" id="remove_opcion_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Quitar"><i class="mdi mdi-playlist-remove font-size-20"></i></a>
-                                                                        
-                                                                    </div>
-                                                        
-                                                                </div>
-                                                                    <div class="custom-control custom-checkbox mb-3">
-                                                                    <?php 
-                                                                        if($valor->evento==0){
-                                                                    ?>
-                                                                        <input type="checkbox" class="custom-control-input check_opcion" id="check_preg_1_'+contador_opcion+'">
-                                                                        <label class="custom-control-label" for="check_preg_1_'+contador_opcion+'">Indique si esta respuesta va accionar un evento</label>
-                                                                    <?php       
-                                                                        }else{?>
-                                                                        <input type="checkbox" class="custom-control-input check_opcion" id="check_preg_1_'+contador_opcion+'" checked>
-                                                                        <label class="custom-control-label" for="check_preg_1_'+contador_opcion+'">Indique si esta respuesta va accionar un evento</label>
-                                                                            <div class="" id="extra_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>">
-                                                                                                    <div class="col-lg-12">
-                                                                                                        <div class="form-group row">
-                                                                                                            
-                                                                                                            <label for="" class="col-sm-2 col-form-label">Enviar correo a : </label>
-                                                                                                            <div class="col-sm-10">
-                                                                                                                <select id="select_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>" class="form-control">
-                                                                                                              
-                                                                                                                    <option value="0">Seleccione</option>
-                                                                                                                    <option value="1">valtex.com</option>
-                                                                                                               
-                                                                                                                   
-                                                                                                                
-                                                                                                                   
-                                                                                                                </select>
-                                                                                                            </div>    
-                                                                                                        </div> 
-                                                                            </div>
-                                                                                            
-                                                                                                    
-
-                                                                    </div>
-                                                                    <?php       
-                                                                        }?>
-                                                                       
-                                                                    </div>
-                                                                   
+                                                            <div class="col-md-1 bajar" id="con_bajar_<?php echo($value->id_preg); ?>">
+                                                                <a href="" id="bajar_<?php echo($value->id_preg); ?>" title="Ver preguntas"><i class=" fas fa-angle-down font-size-20"></i></a>
+                                                                
                                                             </div>
-                                                            <?php       
-                                                            }} ?>
+                                                            <div class="col-md-1 subir" id="con_subir_<?php echo($value->id_preg); ?>" style="display:none">
+                                                                <a href="" id="subir_<?php echo($value->id_preg); ?>" title="Ocultar preguntas"><i class=" fas fa-angle-up font-size-20"></i></a>
+                                                                
+                                                            </div>  
                                                         </div>
-                                                          
+                                                      
+                                                        <div id="caja_<?php echo($value->id_preg); ?>" style="display:none">
+                                                            <div id="list_opcion_<?php echo($value->id_preg); ?>">
+                                                                <?php 
+                                                                
+                                                                        foreach ($opciones as $opcion => $valor){
+                                                                        if($value->id_preg==$valor->id_preg){
+                                                                            
+                                                                ?>
+                                                                <div id="preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>" class="opcion_<?php echo($value->id_preg); ?>">
+                                                                    <div class="d-flex flex-row">
+                                                                        <div class="custom-control custom-radio mb-3 col-lg-10">
+                                                                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                                                                
+                                                                                    <label class="custom-control-label col-lg-12" for="customRadio1">
+                                                                                        <div class="user-box" id="">
+                                                                                        <input type="text" id="preg_opcion_<?php echo($valor->id_op); ?>" value="<?php echo($valor->desc_op); ?>" placeholder="Opcion" disabled>
+                                                                                        </div>
+                                                                                    </label>
+                                                                        </div>
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2">
+                                                                            <a href="" class="text-danger remove" id="remove_opcion_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Quitar"><i class="mdi mdi-playlist-remove font-size-20"></i></a>
+                                                                            
+                                                                        </div>
+                                                            
+                                                                    </div>
+                                                                        <div class="custom-control custom-checkbox mb-3">
+                                                                        <?php 
+                                                                            if($valor->evento==0){
+                                                                        ?>
+                                                                            <input type="checkbox" class="custom-control-input check_opcion" id="check_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>">
+                                                                            <label class="custom-control-label" for="check_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>">Indique si esta respuesta va accionar un evento</label>
+                                                                        <?php       
+                                                                            }else{?>
+                                                                            <input type="checkbox" class="custom-control-input check_opcion" id="check_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>" checked>
+                                                                            <label class="custom-control-label" for="check_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>">Indique si esta respuesta va accionar un evento</label>
+                                                                                <div class="" id="extra_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>">
+                                                                                                        <div class="col-lg-12">
+                                                                                                            <div class="form-group row">
+                                                                                                                
+                                                                                                                <label for="" class="col-sm-2 col-form-label">Enviar correo a : </label>
+                                                                                                                <div class="col-sm-10">
+                                                                                                                    <select id="select_preg_<?php echo($value->id_preg); ?>_<?php echo($valor->id_op); ?>" class="form-control">
+                                                                                                                
+                                                                                                                        <option value="0">Seleccione</option>
+                                                                                                                        <option value="1">valtex.com</option>
+                                                                                                                
+                                                                                                                    
+                                                                                                                    
+                                                                                                                    
+                                                                                                                    </select>
+                                                                                                                </div>    
+                                                                                                            </div> 
+                                                                                </div>
+                                                                                                
+                                                                                                        
 
+                                                                        </div>
+                                                                        <?php       
+                                                                            }?>
+                                                                        
+                                                                        </div>
+                                                                    
+                                                                </div>
+                                                                <?php       
+                                                                }} ?>
+                                                            </div>
                                                             <div class="row">
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group  mb-1">
@@ -139,9 +141,10 @@
                                                                     </div>  
                                                                 </div>
                                                         
-                                                                
-
                                                             </div>
+                                                        </div>
+
+                                                           
                                                         
                                                             
                                                         
@@ -150,6 +153,7 @@
                                                 
                                                     </div>
                                                 </li>
+                                                
                                                 <li class="list-group-item">
                                                         <div class="row d-flex justify-content-end" >
                                                             <div class="col-md-2">
@@ -183,7 +187,7 @@
                                                         </div>
                                                 </li>
                                             </ul>
-                                    <!-- </form> -->
+                                  
 
                         
                                     </div>
@@ -194,12 +198,7 @@
                             <div class="card pregunta" id="pregunta" style="display:none">
                                     <form action="" id="form_pregunta" name="form_pregunta">
                                             <ul class="list-group list-group-flush">
-                                                <!-- <div class="row">
-                                                    <div class="col-lg-12 d-flex justify-content-center">
-                                                        <i class="mdi mdi-drag font-size-24" data-toggle="tooltip" data-placement="top" title="" data-original-title="Arrastrar"></i>
-                                                    </div>
-                                                
-                                                </div> -->
+                                               
                                                 <li class="list-group-item">
                                                     <div class="card-body ">
                                                         <div class="row mb-3">
@@ -246,7 +245,7 @@
                                                         <div class="row d-flex justify-content-end" >
                                                             <div class="col-md-2">
                                                                 <div class="form-group">
-                                                                    <a href="" class="text-success" id="registrar_pregunta" data-toggle="tooltip" data-placement="top" title=""><i class="mdi mdi-content-save font-size-18"></i> Guardar</a>
+                                                                    <a href="" class="text-success" id="registrar_pregunta" data-toggle="tooltip" data-placement="top" title=""><i class="mdi mdi-content-save font-size-18"></i> Registrar</a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2">
