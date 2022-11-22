@@ -1,9 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-// use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// use src\PhpSpreadsheet\Writer\Xlsx;
+// // // // use PhpOffice\PhpSpreadsheet\IOFactory;
+// use src\PhpSpreadsheet\Spreadsheet;
+// require 'public/assets/libs/PhpSpreadsheet/src/PhpSpreadsheet/Spreadsheet.php';
+// require 'public/assets/libs/PhpSpreadsheet/src/PhpSpreadsheet/Writer/Xlsx.php';
+
 class Main extends CI_Controller {
     public function __construct()
     {
@@ -16,6 +19,7 @@ class Main extends CI_Controller {
         $this->load->model('mformulario');
         $this->load->model('mpregunta');
         $this->load->model('mdetalle');
+        $this->load->library('excel');
     }
 	
 
@@ -310,57 +314,129 @@ class Main extends CI_Controller {
 			}
     }
     public function reporteEncuesta($id_enc){
-       
-
+        
+        
         $data   =   $this->mdetalle->camposEncuesta($id_enc);
         $columns = [];
         for ($i = 0; $i < count($data); $i++) {
             $columns[] = $data[$i]->name;
         }
         $datos = $this->mdetalle->reporteEncuesta($id_enc);
-    
+        $objPHPExcel = new PHPExcel();
+        //agregar propiedades
+        $objPHPExcel->getProperties()
+        ->setCreator("Valtx")
+        ->setLastModifiedBy("Valtx")
+        ->setTitle("Reporte")
+        ->setSubject("Reporte")
+        ->setDescription("Reporte generado por Valtx")
+        ->setKeywords("reporte excel en php")
+        ->setCategory("reporte");
 
-        $documento = new Spreadsheet();
-        $documento
-            ->getProperties()
-            ->setCreator("Valtx")
-            ->setLastModifiedBy('Valtx')
-            ->setTitle('Archivo exportado desde MySQL')
-            ->setDescription('Un archivo de Excel exportado desde MySQL por Valtx');
-        
-        # Como ya hay una hoja por defecto, la obtenemos, no la creamos
-        $hojaDeReporte = $documento->getActiveSheet();
-        $hojaDeReporte->setTitle("Reporte");
-        
-        # Escribir encabezado
-        $encabezado = $columns;
-        # El último argumento es por defecto A1 pero lo pongo para que se explique mejor
-        $hojaDeReporte->fromArray($encabezado, null, 'A1');
-        
-        $consulta = $datos;
-       
-        # Comenzamos en la 2 porque la 1 es del encabezado
-        $numeroDeFila = 2;
-             foreach ($datos as $result) {
-                 # Obtener los datos de la base de datos
-                 for ($i=0; $i < count($columns) ; $i++) { 
-                    $columna = $columns[$i];
-                    $hojaDeReporte->setCellValueByColumnAndRow($i+1, $numeroDeFila, $result->$columna);
-                   
-                 }
-              
-                $numeroDeFila++;
+        //pestañas activas
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->getActiveSheet()->setTitle('Reporte');
+
+        //celdas
+
+      // Agregar en celda A1 valor string
+        $objPHPExcel->getActiveSheet()->setCellValue('A1', 'PHPExcel');
             
+        // Agregar en celda A2 valor numerico
+        //$objPHPExcel->getActiveSheet()->setCellValue('A2', '1');
+        $columnArray  = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+        $rowCount = 1;
+        $columnlenght = 0;
+        foreach ($data as $val) {
+            // set column header values
+            $objPHPExcel->getActiveSheet()->SetCellValue($columnArray[$columnlenght++] . $rowCount, $val->name);
+        }
+        // make the column headers bold
+        $objPHPExcel->getActiveSheet()->getStyle($columnArray[0]."1:".$columnArray[$columnlenght]."1")->getFont()->setBold(true);
+        
+        $rowCount++;
+        // Iterate through each result from the SQL query in turn
+        // We fetch each database result row into $row in turn
+        
+       foreach ($datos as $key => $value) {
+            for ($i = 0; $i < $columnlenght; $i++) {
+                $columna = $columns[$i];
+                $objPHPExcel->getActiveSheet()->SetCellValue($columnArray[$i] . $rowCount, $value->$columna);
             }
-     
-        #
-        # Crear un "escritor"
-      
-        $writer = new Xlsx($documento);
+            $rowCount++;
+       }
+          
+        
+
+
+        // // Agregar en celda A3 valor boleano
+        // $objPHPExcel->getActiveSheet()->setCellValue('A3', TRUE);
+            
+        // // Agregar a Celda A4 una formula
+        // $objPHPExcel->getActiveSheet()->setCellValue('A4', '=CONCATENATE(A1, " ", A2)');
+        //descargar archivo
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment;filename="reporte.xlsx"');
+        // header('Cache-Control: max-age=0');
+        
+        // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        // print_r($objWriter);
+        // file_put_contents('depuracion.txt', ob_get_contents());
+        // ob_end_clean();
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+       
+        // $objWriter->save('c://exportacion');
         $fecha_creacion= date("Y-m-d");     
         # Le pasamos la ruta de guardado
         $ruta='reporte-'.$id_enc.'-'.$fecha_creacion.'.xlsx';
-        $writer->save('./public/assets/reportes/'.$ruta);
+        $objWriter->save('./public/assets/reportes/'.$ruta);
+
+
+        // $documento = new Spreadsheet();
+        // $documento
+        //     ->getProperties()
+        //     ->setCreator("Valtx")
+        //     ->setLastModifiedBy('Valtx')
+        //     ->setTitle('Archivo exportado desde MySQL')
+        //     ->setDescription('Un archivo de Excel exportado desde MySQL por Valtx');
+        
+        // # Como ya hay una hoja por defecto, la obtenemos, no la creamos
+        // $hojaDeReporte = $documento->getActiveSheet();
+        // $hojaDeReporte->setTitle("Reporte");
+        
+        // # Escribir encabezado
+        // $encabezado = $columns;
+        // # El último argumento es por defecto A1 pero lo pongo para que se explique mejor
+        // $hojaDeReporte->fromArray($encabezado, null, 'A1');
+        
+        // $consulta = $datos;
+       
+        // # Comenzamos en la 2 porque la 1 es del encabezado
+        // $numeroDeFila = 2;
+        //      foreach ($datos as $result) {
+        //          # Obtener los datos de la base de datos
+        //          for ($i=0; $i < count($columns) ; $i++) { 
+        //             $columna = $columns[$i];
+        //             $hojaDeReporte->setCellValueByColumnAndRow($i+1, $numeroDeFila, $result->$columna);
+                   
+        //          }
+              
+        //         $numeroDeFila++;
+            
+        //     }
+     
+        // #
+        // # Crear un "escritor"
+      
+        // $writer = new Xlsx($documento);
+        // $fecha_creacion= date("Y-m-d");     
+        // # Le pasamos la ruta de guardado
+        // $ruta='reporte-'.$id_enc.'-'.$fecha_creacion.'.xlsx';
+        // $writer->save('./public/assets/reportes/'.$ruta);
+
+
+
+
         echo json_encode($ruta);
        
     }

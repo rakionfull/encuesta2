@@ -60,7 +60,7 @@
                                 <a href="" id="descarga_<?php echo($valor->id_form) ?>" class="descarga" download>
                                     <img src="<?=base_url('public/images/excel.png') ?>" alt="" height='30' witdh='30'>
                                 </a>
-                                
+                               
                             </div>
                         </div>
                     <?php }} ?>

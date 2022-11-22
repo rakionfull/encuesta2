@@ -53,10 +53,11 @@ $route['default_controller'] = 'welcome';
 $route['home'] = 'welcome/home';
 $route['login'] = 'auth/login';
 $route['listado'] = 'main/listCampanias';
-$route['listCamp'] = 'asesor/listCampanias';
 $route['mantenimiento'] = 'Main/manCampanias';
 $route['encuestas/(:any)'] = 'main/manEncuestas/$1';
 $route['preguntas/(:any)'] = 'main/manPreguntas/$1';
+
+$route['listCamp'] = 'asesor/listCampanias';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
